@@ -1,0 +1,6 @@
+<h1>Top#auth</h1>
+<p>Find me in app/views/top/auth.html.erb</p>
+
+<% if user_signed_in? %>
+  <%= link_to "ログアウト", destroy_user_session_path, :method => :delete %>
+<% end %>

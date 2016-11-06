@@ -7,6 +7,14 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     callback_from :twitter
   end
 
+  def facebook
+    callback_from :facebook
+  end
+
+  def google
+    callback_from :google
+  end
+
   # More info at:
   # https://github.com/plataformatec/devise#omniauth
 
@@ -31,7 +39,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def callback_from(provider)
     #logger.debug "=== [provider] ==: #{provider.inspect}"
-    logger.debug "=== [request.env] ==: #{request.env['omniauth.auth']}"
+    #logger.debug "=== [request.env] ==: #{request.env['omniauth.auth']}"
 
     provider = provider.to_s
     auth = request.env['omniauth.auth']
@@ -49,7 +57,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         nickname: auth.info.nickname,
         provider: provider
       }
-      logger.debug "===[sns_data1]==: #{session['sns_data'].inspect}"
+      #logger.debug "===[sns_data1]==: #{session['sns_data'].inspect}"
     else
       session["devise.#{provider}_data"] = auth
       redirect_to new_user_registration_url

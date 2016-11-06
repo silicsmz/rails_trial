@@ -31,12 +31,12 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def callback_from(provider)
     #logger.debug "=== [provider] ==: #{provider.inspect}"
-    #logger.debug "=== [request.env] ==: #{request.env['omniauth.auth']}"
+    logger.debug "=== [request.env] ==: #{request.env['omniauth.auth']}"
 
     provider = provider.to_s
-
+    auth = request.env['omniauth.auth']
     # ユーザデータを取得、存在しなければ登録
-    @user = User.find_for_oauth(request.env['omniauth.auth'])
+    @user = User.find_for_oauth(auth)
     
     if @user.persisted? # 保存済みかどうかチェック
       sign_in_and_redirect @user, event: :authentication # Devise::Controllers::Helpers#sign_in_and_redirect
@@ -44,8 +44,14 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
       #flash[:notice] = I18n.t('devise.omniauth_callbacks.success', kind: provider.capitalize)
       set_flash_message(:notice, :success) if is_navigational_format?
+      session['sns_data'] = {
+        name: auth.info.name,
+        nickname: auth.info.nickname,
+        provider: provider
+      }
+      logger.debug "===[sns_data1]==: #{session['sns_data'].inspect}"
     else
-      session["devise.#{provider}_data"] = request.env['omniauth.auth']
+      session["devise.#{provider}_data"] = auth
       redirect_to new_user_registration_url
     end
   end

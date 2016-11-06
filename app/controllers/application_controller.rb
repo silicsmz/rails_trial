@@ -3,12 +3,12 @@ class ApplicationController < ActionController::Base
   #skip_before_filter :verify_authenticity_token
   #protect_from_forgery with: :null_session
 
-  # ログイン時に実行
+  # ログイン後の遷移先
   def after_sign_in_path_for(resource)
-    top_auth_path
+    tops_index_path
   end
 
-  # ログアウト時に実行
+  # ログアウト後の遷移先
   def after_sign_out_path_for(resource)
     root_path
   end

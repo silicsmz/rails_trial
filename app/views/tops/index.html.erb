@@ -1,0 +1,13 @@
+<h1>Tops#index</h1>
+
+<% if session['sns_data'].present? %>
+  <p>プロバイダー名 ：<%= session['sns_data']['provider'] %></p>
+  <p>SNSアカウント名：<%= session['sns_data']['name'] %></p>
+  <p>SNSニックネーム：<%= session['sns_data']['nickname'] %></p>
+<% else %>
+  <p>メールアドレス：<%= current_user.email %></p>
+<% end %>
+
+<% if user_signed_in? %>
+  <%= link_to "ログアウト", destroy_user_session_path, :method => :delete %>
+<% end %>

@@ -60,4 +60,4 @@ gem 'omniauth-facebook', '~> 4.0'
 gem 'omniauth-google-oauth2', '~> 0.4.1'
 
 # dotenv
-gem 'dotenv', '~> 2.1', '>= 2.1.1'
+gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'
